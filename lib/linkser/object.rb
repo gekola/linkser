@@ -17,7 +17,7 @@ module Linkser
     end
 
     def build_body
-      uri = URI.parse last_url
+      uri = URI.parse CGI.escape(last_url).gsub("%3A", ":").gsub("%2F", "/")
       if uri.scheme and (uri.scheme.eql? "http" or uri.scheme.eql? "https")
         http = Net::HTTP.new uri.host, uri.port
         if uri.scheme.eql? "https"

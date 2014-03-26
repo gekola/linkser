@@ -30,7 +30,7 @@ module Linkser
         @resource ||= build_resource
       end
 
-      protected 
+      protected
 
       def build_title
         ogp && ogp.title ||
@@ -55,7 +55,7 @@ module Linkser
               end
             rescue
             end
-          end        
+          end
 
           nokogiri.css('img').each do |img|
             break if images.length >= max_images
@@ -63,9 +63,9 @@ module Linkser
             next unless img_src
             img_src.strip!
             img_src = complete_url img_src, last_url
-            img_uri = URI.parse(img_src)
+            img_uri = URI.parse(CGI.escape(img_src).gsub("%3A", ":").gsub("%2F", "/"))
             img_ext = File.extname(img_uri.path)
-            img_name = File.basename(img_uri.path,img_ext)
+            # img_name = File.basename(img_uri.path,img_ext)
 
             if [".jpg", ".jpeg", ".png"].include? img_ext
               begin
@@ -77,7 +77,7 @@ module Linkser
               end
             end
           end
-        end      
+        end
       end
 
       def build_ogp
@@ -91,14 +91,14 @@ module Linkser
         ogp
       end
 
-      def build_resource 
+      def build_resource
         Linkser::Resource.new ogp if ogp
       end
 
       private
 
       def complete_url src, url
-        uri = URI.parse(url)
+        uri = URI.parse(CGI.escape(url).gsub("%3A", ":").gsub("%2F", "/"))
         scheme = "#{uri.scheme}://"
         base_url = scheme + uri.host + (uri.port!=80 ? ":" + uri.port.to_s : "")
         relative_url = scheme + uri.host + (uri.port!=80 ? ":" + uri.port.to_s : "") + uri.path
@@ -121,8 +121,8 @@ module Linkser
       end
 
       def can_hotlink_img? url, limit=10
-	return false if limit < 0
-        uri = URI.parse(url)
+        return false if limit < 0
+        uri = URI.parse(CGI.escape(url).gsub("%3A", ":").gsub("%2F", "/"))
         http = Net::HTTP.new uri.host, uri.port
         http.start do |agent|
             response = agent.head uri.request_uri, { 'Referrer' => 'http://www.linkser.com/' }

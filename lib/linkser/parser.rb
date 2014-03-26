@@ -21,7 +21,7 @@ module Linkser
     def get_head url, options, limit = 10
       raise 'Too many HTTP redirects. URL was not reacheable within the HTTP redirects limit' if (limit==0)
       @last_url = url
-      uri = URI.parse url
+      uri = URI.parse CGI.escape(url).gsub("%3A", ":").gsub("%2F", "/")
       if uri.scheme and (uri.scheme.eql? "http" or uri.scheme.eql? "https")
         http = Net::HTTP.new uri.host, uri.port
         if uri.scheme.eql? "https"
@@ -31,7 +31,7 @@ module Linkser
           http.use_ssl = true
         end
       else
-      raise 'URI ' + uri.to_s + ' is not supported by Linkser'         
+      raise 'URI ' + uri.to_s + ' is not supported by Linkser'
       end
       http.start do |agent|
         response = agent.head uri.request_uri
