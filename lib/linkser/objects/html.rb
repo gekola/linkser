@@ -87,7 +87,7 @@ module Linkser
             ogp[$1.gsub('-','_')] = m.attribute('content').to_s
           end
         end
-        ogp = false if ogp.keys.empty? || !ogp.valid?
+        ogp = false if ogp.keys.empty? #|| !ogp.valid?
         ogp
       end
 
