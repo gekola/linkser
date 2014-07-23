@@ -63,8 +63,7 @@ module Linkser
             next unless img_src
             img_src.strip!
             img_src = complete_url img_src, last_url
-            # img_uri = URI.parse(CGI.escape(img_src).gsub("%3A", ":").gsub("%2F", "/"))
-            img_uri = Addressable::URI.parse img_src #last_url
+            img_uri = URI.parse(Addressable::URI.escape(img_src))
             img_ext = File.extname(img_uri.path)
             # img_name = File.basename(img_uri.path,img_ext)
 
@@ -99,8 +98,7 @@ module Linkser
       private
 
       def complete_url src, url
-        uri = URI.parse(CGI.escape(url).gsub("%3A", ":").gsub("%2F", "/"))
-        uri = Addressable::URI.parse url
+        uri = URI.parse(Addressable::URI.escape(url))
         scheme = "#{uri.scheme}://"
         base_url = scheme + uri.host + (uri.port!=80 ? ":" + uri.port.to_s : "")
         relative_url = scheme + uri.host + (uri.port!=80 ? ":" + uri.port.to_s : "") + uri.path
@@ -124,8 +122,7 @@ module Linkser
 
       def can_hotlink_img? url, limit=10
         return false if limit < 0
-        # uri = URI.parse(CGI.escape(url).gsub("%3A", ":").gsub("%2F", "/"))
-        uri = Addressable::URI.parse url
+        uri = URI.parse(Addressable::URI.escape(url))
         http = Net::HTTP.new uri.host, uri.port
         http.start do |agent|
             response = agent.head uri.request_uri, { 'Referrer' => 'http://www.linkser.com/' }
