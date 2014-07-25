@@ -1,3 +1,4 @@
+require 'addressable/uri'
 require 'linkser/version'
 
 module Linkser

@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('nokogiri', '>= 1.4.0')
   s.add_runtime_dependency('ruby-imagespec', "~> 0.2.0")
   s.add_runtime_dependency('ging-opengraph', "~> 0.0.4")
+  s.add_runtime_dependency('addressable', "~> 2.3.6")
 
   # Development Gem dependencies
   #
@@ -33,4 +34,5 @@ Gem::Specification.new do |s|
   end
   # Specs
   s.add_development_dependency('rspec', '>= 2.7.0')
+  s.add_development_dependency('vcr', '>= 2.9.0')
 end
