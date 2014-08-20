@@ -131,7 +131,7 @@ module Linkser
                 return true
             when Net::HTTPRedirection then
                 location = response['location']
-                warn "Redirecting image to #{location}"
+                @logger.warn "Redirecting image to #{location}" if @logger
                 return can_hotlink_img? location, limit - 1
             else
                 return false

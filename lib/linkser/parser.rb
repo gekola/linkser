@@ -6,6 +6,7 @@ module Linkser
     attr_reader :object, :last_url
 
     def initialize url, options={}
+      @logger = options[:logger]
       head = get_head url, options
       @object =
         case head.content_type
@@ -41,7 +42,7 @@ module Linkser
         when Net::HTTPRedirection then
           location = response['location']
           location = "#{uri.scheme}://#{uri.host}:#{uri.port}#{location}" if location.start_with?("/")
-          warn "Redirecting to #{location}"
+          @logger.warn "Redirecting to #{location}" if @logger
           return get_head location, options, limit - 1
         else
         raise 'The HTTP request has a ' + response.code + ' code'

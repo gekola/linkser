@@ -10,6 +10,7 @@ module Linkser
       @last_url = last_url
       @head = head
       @options = options
+      @logger = options[:logger]
     end
 
     def body
