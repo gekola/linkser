@@ -22,9 +22,9 @@ Gem::Specification.new do |s|
   #
   s.add_runtime_dependency('rake')
   s.add_runtime_dependency('nokogiri', '>= 1.4.0')
-  s.add_runtime_dependency('ruby-imagespec', "~> 0.2.0")
-  s.add_runtime_dependency('ging-opengraph', "~> 0.0.4")
-  s.add_runtime_dependency('addressable', "~> 2.3.6")
+  s.add_runtime_dependency('ruby-imagespec', ">= 0.2.0")
+  s.add_runtime_dependency('ging-opengraph', ">= 0.0.4")
+  s.add_runtime_dependency('addressable', ">= 2.3.6")
 
   # Development Gem dependencies
   #
